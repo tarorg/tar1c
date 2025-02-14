@@ -7,6 +7,7 @@
     }
   
     let products: Product[] = [];
+    let loading = true;
   
     onMount(async () => {
       const response = await fetch('/api/products');
@@ -16,6 +17,7 @@
       } else {
         console.error('Failed to fetch products:', response.statusText);
       }
+      loading = false;
     });
   </script>
   
@@ -40,19 +42,23 @@
     }
   </style>
   
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Core</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each products as product}
+  {#if loading}
+    <p>Loading products...</p>
+  {:else}
+    <table class="table">
+      <thead>
         <tr>
-          <td>{product.id}</td>
-          <td>{product.core}</td>
+          <th>ID</th>
+          <th>Core</th>
         </tr>
-      {/each}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {#each products as product}
+          <tr>
+            <td>{product.id}</td>
+            <td>{product.core}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {/if}

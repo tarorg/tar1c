@@ -3,6 +3,7 @@
 	import Chat from '$lib/Chat.svelte';
 	import { writable } from 'svelte/store';
 	import Products from './Products.svelte';
+	import Sales from './Sales.svelte';
 	let { children } = $props();
 	const menuItems = [
 		{ id: 1, label: 'Space', icon: '🌌' },
@@ -105,6 +106,8 @@
 <div class="content" style="height: calc(100vh - 4rem);">
 	{#if $selectedItem.label === 'Products'}
 		<Products />
+	{:else if $selectedItem.label === 'Sales'}
+		<Sales />
 	{:else}
 		{@render children()}
 	{/if}
