@@ -26,5 +26,8 @@
 		"typescript": "^5.0.0",
 		"vite": "^6.0.0",
 		"wrangler": "^3.109.1"
+	},
+	"dependencies": {
+		"@libsql/client": "^0.14.0"
 	}
 }

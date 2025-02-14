@@ -1,2 +1,22 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+</script>
+
+<style>
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table th, .table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+</style>
+
+<!-- User table removed -->
