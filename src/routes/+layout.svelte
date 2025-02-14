@@ -4,6 +4,7 @@
 	import { writable } from 'svelte/store';
 	import Products from './Products.svelte';
 	import Sales from './Sales.svelte';
+	import Posts from './Posts.svelte'; // Add this line
 	let { children } = $props();
 	const menuItems = [
 		{ id: 1, label: 'Space', icon: '🌌' },
@@ -108,6 +109,8 @@
 		<Products />
 	{:else if $selectedItem.label === 'Sales'}
 		<Sales />
+	{:else if $selectedItem.label === 'Posts'} <!-- Add this condition -->
+		<Posts /> <!-- Add this line -->
 	{:else}
 		{@render children()}
 	{/if}
