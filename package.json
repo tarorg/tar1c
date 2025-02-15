@@ -28,6 +28,8 @@
 		"wrangler": "^3.109.1"
 	},
 	"dependencies": {
-		"@libsql/client": "^0.14.0"
+		"@instantdb/core": "^0.17.15",
+		"@libsql/client": "^0.14.0",
+		"lucide-svelte": "^0.475.0"
 	}
 }

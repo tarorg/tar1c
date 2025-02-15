@@ -4,7 +4,9 @@
 	import { writable } from 'svelte/store';
 	import Products from './Products.svelte';
 	import Sales from './Sales.svelte';
-	import Posts from './Posts.svelte'; // Add this line
+	import Posts from './Posts.svelte';
+	import Tasks from './Tasks.svelte'; // Import Tasks component
+	import { Play, Circle } from 'lucide-svelte'; // Import Lucide icons
 	let { children } = $props();
 	const menuItems = [
 		{ id: 1, label: 'Space', icon: '🌌' },
@@ -18,6 +20,7 @@
 	];
 	const isOpen = writable(false);
 	const selectedItem = writable(menuItems[0]);
+	const selectedIcon = writable(null); // Add writable store for selected icon
 
 	function toggleDropdown() {
 		isOpen.update(n => !n);
@@ -26,6 +29,10 @@
 	function selectItem(item) {
 		selectedItem.set(item);
 		isOpen.set(false);
+	}
+
+	function selectIcon(icon) {
+		selectedIcon.set(icon);
 	}
 </script>
 
@@ -83,24 +90,44 @@
 		padding: 1rem;
 		background: #fff;
 	}
+	.icons {
+		display: flex;
+		align-items: center;
+		gap: 1rem; /* Add space between icons */
+	}
+	.icon {
+		cursor: pointer;
+		font-size: 1.5rem; /* Adjust size as needed */
+		display: flex;
+		align-items: center;
+	}
 </style>
 
 <div class="navbar">
 	<div class="menu">
-		<button class="menu-button" onclick={toggleDropdown} aria-haspopup="true" aria-expanded={$isOpen}>
-				<span>{$selectedItem.icon}</span>
+		<button class="menu-button" on:click={toggleDropdown} aria-haspopup="true" aria-expanded={$isOpen}>
+			<span>{$selectedItem.icon}</span>
 			<span>{$selectedItem.label}</span>
 		</button>
 		{#if $isOpen}
 			<div class="dropdown">
 				{#each menuItems as item}
-					<div class="dropdown-item" role="button" tabindex="0" onclick={() => selectItem(item)} onkeydown={(e) => e.key === 'Enter' && selectItem(item)}>
+					<div class="dropdown-item" role="button" tabindex="0" on:click={() => selectItem(item)} on:keydown={(e) => e.key === 'Enter' && selectItem(item)}>
 						<span>{item.icon}</span>
 						<span>{item.label}</span>
 					</div>
 				{/each}
 			</div>
 		{/if}
+	</div>
+	<!-- Add minimal outlined modern icons and align them to the right end -->
+	<div class="icons">
+		<div class="icon" on:click={() => selectIcon('tasks')}>
+			<Play />
+		</div>
+		<div class="icon" on:click={() => selectIcon('people')}>
+			<Circle />
+		</div>
 	</div>
 </div>
 
@@ -109,8 +136,10 @@
 		<Products />
 	{:else if $selectedItem.label === 'Sales'}
 		<Sales />
-	{:else if $selectedItem.label === 'Posts'} <!-- Add this condition -->
-		<Posts /> <!-- Add this line -->
+	{:else if $selectedItem.label === 'Posts'}
+		<Posts />
+	{:else if $selectedIcon === 'tasks'} <!-- Add this condition -->
+		<Tasks /> <!-- Add this line -->
 	{:else}
 		{@render children()}
 	{/if}
