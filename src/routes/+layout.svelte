@@ -21,6 +21,7 @@
 	const isOpen = writable(false);
 	const selectedItem = writable(menuItems[0]);
 	const selectedIcon = writable(null); // Add writable store for selected icon
+	const selectedComponent = writable(''); // Add writable store for selected component
 
 	function toggleDropdown() {
 		isOpen.update(n => !n);
@@ -29,10 +30,12 @@
 	function selectItem(item) {
 		selectedItem.set(item);
 		isOpen.set(false);
+		selectedComponent.set(''); // Reset selected component when a menu item is selected
 	}
 
 	function selectIcon(icon) {
 		selectedIcon.set(icon);
+		selectedComponent.set(icon); // Set the selected component
 	}
 </script>
 
@@ -132,14 +135,14 @@
 </div>
 
 <div class="content" style="height: calc(100vh - 4rem);">
-	{#if $selectedItem.label === 'Products'}
+	{#if $selectedComponent === 'tasks'} <!-- Update this condition -->
+		<Tasks /> <!-- Add this line -->
+	{:else if $selectedItem.label === 'Products'}
 		<Products />
 	{:else if $selectedItem.label === 'Sales'}
 		<Sales />
 	{:else if $selectedItem.label === 'Posts'}
 		<Posts />
-	{:else if $selectedIcon === 'tasks'} <!-- Add this condition -->
-		<Tasks /> <!-- Add this line -->
 	{:else}
 		{@render children()}
 	{/if}
